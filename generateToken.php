@@ -14,6 +14,4 @@ function generateToken() {
 	}
 	return $retorno;
 }
-
-echo generateToken();
 ?>

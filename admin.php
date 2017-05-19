@@ -9,25 +9,44 @@ require_once('connection/connection.php');
 require_once('Registry.php');
 require_once('dao/UserDAO.php');
 require_once('model/User.php');
+require_once('dao/CounterDAO.php');
+require_once('model/Counter.php');
 
 $registry = Registry::getInstance();
 $registry->set('Connection', $conn);
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-$userDAO = new UserDAO();
 $json_str = 'Nenhuma informação selecionada';
 
 if ($data["action"] == 'token') {
+	$userDAO = new UserDAO();
 	$user = $userDAO->activeUserByToken($data["token"]);
 	
 	$json_str = json_encode($user);
 } elseif ($data["action"] == 'removeAdmin') {
+	$userDAO = new UserDAO();
     $ok = $userDAO->desactiveUser($data["token"]);
 
     $json_str = json_encode(['ok' => $ok]);
 } elseif ($data["action"] == 'newCounter') {
-
+	$counterDAO = new CounterDAO();
+	$counter = new Counter();
+	$counter->setId($data["id"]);
+	$counter->setDateEvent($data["date"]);
+	$counter->setType($data["type"]);
+	
+	$counter = $counterDAO->insert($counter);
+	
+	$json_str = json_encode($counter);
+} elseif ($data["action"] == 'disableCounter') {
+	$counterDAO = new CounterDAO();	
+	$counterDAO->disable($data["id"]);
+} elseif ($data["action"] == 'syncCounter') {
+	$counterDAO = new CounterDAO();
+	
+	$total = $counterDAO->sync($data["id"], $data["amount"]);
+	$json_str = json_encode(['total' => $total]);
 }
 echo $json_str;
 ?>

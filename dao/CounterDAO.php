@@ -1,5 +1,6 @@
 <?php
 include_once('model/Counter.php');
+include_once('generateToken.php');
 
 class CounterDAO {
 
@@ -10,16 +11,21 @@ class CounterDAO {
         $this->conn = $registry->get('Connection');
     }
 
-    public function insert(User $user) {
+    public function insert(Counter $counter) {
         $this->conn->beginTransaction();
 		
+		$token = generateToken();
+		
         try {
+			//INSERE UM NOVO CONTADOR
             $stmt = $this->conn->prepare(
-                'INSERT INTO users (name, token) VALUES (:name, :token)'
+                'INSERT INTO counters (token, id_admin, date, type) VALUES (:token, :id_admin, :date, :type)'
             );
 
-            $stmt->bindValue(':name', $user->getName());
-            $stmt->bindValue(':token', $user->getToken());
+            $stmt->bindValue(':token', $token);
+            $stmt->bindValue(':id_admin', $counter->getId());
+            $stmt->bindValue(':date', $counter->getDateEvent());
+            $stmt->bindValue(':type', $counter->getType());
             $stmt->execute();
 
             $this->conn->commit();
@@ -27,43 +33,78 @@ class CounterDAO {
         catch(Exception $e) {
             $this->conn->rollback();
         }
-    }
-
-    public function getAll() {
-        $stmt = $this->conn->query(
-            'SELECT * FROM users'
-        );
-
-        return $this->processResults($stmt, 1);
+        
+        return $this->getCounterToken($token);
     }
 	
-	public function activeUserByToken($token) {
+	public function disable($id) {
+		//DESATIVA UM CONTADOR PELO ID
+        $stmt = $this->conn->prepare(
+            'UPDATE counters SET active = 0, date_finish = NOW() WHERE id = :id AND active = 1'
+        );
+        $stmt->execute(array(
+            ':id' => $id
+        ));
+    }
+	
+	public function getCounterToken($token) {
+		//BUSCA O CONTADOR REFERENTE AO TOKEN
 		$stmt = $this->conn->prepare(
-			'UPDATE users SET active = 1, date_register = NOW() WHERE token = :token AND active = 0'
+			'SELECT * FROM counters WHERE token = :token'
 		);
 		$stmt->execute(array(
 			':token' => $token
 		));
-		if($stmt->rowCount()) {
-			$stmt = $this->conn->prepare(
-				'SELECT * FROM users WHERE token = :token'
-			);
-			$stmt->execute(array(
-				':token' => $token
-			));
-			return $this->processResults($stmt, 0);
-		}
-		return new User();
+		return $this->processResults($stmt, 0);
 	}
-
-	public function desactiveUser($token) {
-        $stmt = $this->conn->prepare(
-            'UPDATE users SET active = 0, date_register = NULL WHERE token = :token AND active = 1'
+	
+	public function sync($id, $amount) {
+		//INSERE O NOVO TOTAL DO CONTADOR
+		$stmt = $this->conn->prepare(
+            'UPDATE counters SET total = :amount WHERE id = :id AND active = 1'
         );
         $stmt->execute(array(
-            ':token' => $token
+			':amount' => $amount,
+            ':id' => $id
         ));
-        return $stmt->rowCount() != 0;
+		
+		//PEGA O CÓDIGO DO CONTADOR ATUAL
+		$stmt = $this->conn->prepare(
+			'SELECT token FROM counters WHERE id = :id'
+		);
+		$stmt->execute(array(
+			':id' => $id
+		));
+		$row = $stmt->fetch(PDO::FETCH_OBJ);
+		
+		//FAZ A SOMATÓRIA DOS CONTADORES
+		$stmt = $this->conn->prepare(
+			'SELECT SUM(total) as total FROM counters WHERE token = :token'
+		);
+		$stmt->execute(array(
+			':token' => $row->token
+		));
+		$row = $stmt->fetch(PDO::FETCH_OBJ);
+		
+		//INSERE NO CONTADOR PRINCIAL O TOTAL DA SOMATORIA
+		$stmt = $this->conn->prepare(
+            'UPDATE counters SET total_general = :total_general WHERE id = :id AND active = 1'
+        );
+        $stmt->execute(array(
+			':total_general' => $row->total,
+            ':id' => $id
+        ));
+		
+		return $row->total;
+	}
+
+    public function getAll() {
+		//BUSCA TODOS OS CONTADORES
+        $stmt = $this->conn->query(
+            'SELECT * FROM counters'
+        );
+
+        return $this->processResults($stmt, 1);
     }
 
     private function processResults($stmt, $type = 1) {
@@ -71,17 +112,17 @@ class CounterDAO {
 			if ($type == 1) {
 				$results = array();
 				while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-					$user = new User($row->id, $row->name, $row->token, $row->active, $row->date_register);
-					$results[] = $user;
+					$counter = new Counter($row->id, $row->date_event, $row->token, $row->type, $row->total, $row->total_general);
+					$results[] = $counter;
 				}
 				return $results;
 			} else {
 				$row = $stmt->fetch(PDO::FETCH_OBJ);
-				$user = new User($row->id, $row->name, $row->token, $row->active, $row->date_register);
-				return $user;
+				$counter = new Counter($row->id, $row->date_event, $row->token, $row->type, $row->total, $row->total_general);
+				return $counter;
 			}
         }
-        return new User();
+        return new counter();
     }
 }
 ?>

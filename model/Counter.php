@@ -6,13 +6,15 @@ class Counter implements JsonSerializable {
     private $token;
     private $type;
     private $total;
+	private $totalGeneral;
 	
-	function __construct($id = 0, $dateEvent = '', $token = 0, $type = '', $total = 0) {
+	function __construct($id = 0, $dateEvent = '', $token = 0, $type = '', $total = 0, $totalGeneral = 0) {
 		$this->id = $id;
 		$this->dateEvent = $dateEvent;
 		$this->token = $token;
 		$this->type = $type;
 		$this->total = $total;
+		$this->totalGeneral = $totalGeneral;
 	}
 
     public function getId() {
@@ -29,7 +31,11 @@ class Counter implements JsonSerializable {
     }
 
     public function setDateEvent($dateEvent) {
-        $this->dateEvent = $dateEvent;
+		if(strpos($dateEvent, "/") !== false) {
+			$this->dateEvent = implode("-", array_reverse(explode("/", $dateEvent)));
+		} else {
+			$this->dateEvent = $dateEvent;
+		}
         return $this;
     }
 	
@@ -50,6 +56,15 @@ class Counter implements JsonSerializable {
         $this->total = $total;
         return $this;
     }
+	
+	public function getTotalGeneral() {
+        return $this->totalGeneral;
+    }
+
+    public function setTotalGeneral($totalGeneral) {
+        $this->totalGeneral = $totalGeneral;
+        return $this;
+    }
 
 	public function getType() {
         return $this->type;
@@ -66,6 +81,7 @@ class Counter implements JsonSerializable {
             'dateEvent' => $this->getDateEvent(),
             'token' => $this->getToken(),
             'total' => $this->getTotal(),
+            'totalGeneral' => $this->getTotalGeneral(),
             'type' => $this->getType()
         ];
     }
