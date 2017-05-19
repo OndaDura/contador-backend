@@ -1,0 +1,52 @@
+[18-May-2017 12:45:48 UTC] PHP Fatal error:  Call to undefined function geraSenha() in /home/renanpro/public_html/ws/generateToken.php on line 18
+[18-May-2017 12:46:13 UTC] PHP Fatal error:  Call to undefined function geraSenha() in /home/renanpro/public_html/ws/generateToken.php on line 18
+[18-May-2017 12:46:15 UTC] PHP Fatal error:  Call to undefined function geraSenha() in /home/renanpro/public_html/ws/generateToken.php on line 18
+[18-May-2017 13:41:56 UTC] PHP Catchable fatal error:  Argument 1 passed to UserDAO::insert() must be an instance of User, null given, called in /home/renanpro/public_html/ws/index.php on line 18 and defined in /home/renanpro/public_html/ws/dao/UserDAO.php on line 13
+[18-May-2017 18:10:05 UTC] PHP Parse error:  syntax error, unexpected ')', expecting variable (T_VARIABLE) in /home/renanpro/public_html/ws/dao/UserDAO.php on line 40
+[18-May-2017 18:10:06 UTC] PHP Parse error:  syntax error, unexpected ')', expecting variable (T_VARIABLE) in /home/renanpro/public_html/ws/dao/UserDAO.php on line 40
+[18-May-2017 19:23:54 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'date = NOW() WHERE token = NULL AND active = 0' at line 1' in /home/renanpro/public_html/ws/dao/UserDAO.php:46
+Stack trace:
+#0 /home/renanpro/public_html/ws/dao/UserDAO.php(46): PDOStatement->execute(Array)
+#1 /home/renanpro/public_html/ws/admin.php(19): UserDAO->activeUserByToken(NULL)
+#2 {main}
+  thrown in /home/renanpro/public_html/ws/dao/UserDAO.php on line 46
+[18-May-2017 19:23:55 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'date = NOW() WHERE token = 'AB5K7R' AND active = 0' at line 1' in /home/renanpro/public_html/ws/dao/UserDAO.php:46
+Stack trace:
+#0 /home/renanpro/public_html/ws/dao/UserDAO.php(46): PDOStatement->execute(Array)
+#1 /home/renanpro/public_html/ws/admin.php(19): UserDAO->activeUserByToken('AB5K7R')
+#2 {main}
+  thrown in /home/renanpro/public_html/ws/dao/UserDAO.php on line 46
+[18-May-2017 19:25:25 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'date' in 'field list'' in /home/renanpro/public_html/ws/dao/UserDAO.php:46
+Stack trace:
+#0 /home/renanpro/public_html/ws/dao/UserDAO.php(46): PDOStatement->execute(Array)
+#1 /home/renanpro/public_html/ws/admin.php(19): UserDAO->activeUserByToken(NULL)
+#2 {main}
+  thrown in /home/renanpro/public_html/ws/dao/UserDAO.php on line 46
+[18-May-2017 19:25:25 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42S22]: Column not found: 1054 Unknown column 'date' in 'field list'' in /home/renanpro/public_html/ws/dao/UserDAO.php:46
+Stack trace:
+#0 /home/renanpro/public_html/ws/dao/UserDAO.php(46): PDOStatement->execute(Array)
+#1 /home/renanpro/public_html/ws/admin.php(19): UserDAO->activeUserByToken('AB5K7R')
+#2 {main}
+  thrown in /home/renanpro/public_html/ws/dao/UserDAO.php on line 46
+[18-May-2017 19:27:45 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY093]: Invalid parameter number: parameter was not defined' in /home/renanpro/public_html/ws/dao/UserDAO.php:53
+Stack trace:
+#0 /home/renanpro/public_html/ws/dao/UserDAO.php(53): PDOStatement->execute(Array)
+#1 /home/renanpro/public_html/ws/admin.php(19): UserDAO->activeUserByToken('AB5K7R')
+#2 {main}
+  thrown in /home/renanpro/public_html/ws/dao/UserDAO.php on line 53
+[18-May-2017 19:45:31 UTC] PHP Warning:  Missing argument 1 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:45:31 UTC] PHP Warning:  Missing argument 2 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:45:31 UTC] PHP Warning:  Missing argument 3 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:45:31 UTC] PHP Warning:  Missing argument 4 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:51:53 UTC] PHP Warning:  Missing argument 1 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:51:53 UTC] PHP Warning:  Missing argument 2 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:51:53 UTC] PHP Warning:  Missing argument 3 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:51:53 UTC] PHP Warning:  Missing argument 4 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:53:06 UTC] PHP Warning:  Missing argument 1 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:53:06 UTC] PHP Warning:  Missing argument 2 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:53:06 UTC] PHP Warning:  Missing argument 3 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:53:06 UTC] PHP Warning:  Missing argument 4 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:53:07 UTC] PHP Warning:  Missing argument 1 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:53:07 UTC] PHP Warning:  Missing argument 2 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:53:07 UTC] PHP Warning:  Missing argument 3 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[18-May-2017 19:53:07 UTC] PHP Warning:  Missing argument 4 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
