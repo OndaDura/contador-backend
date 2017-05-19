@@ -1,7 +1,7 @@
 <?php
-include_once('model/User.php');
+include_once('model/Counter.php');
 
-class UserDAO {
+class CounterDAO {
 
     private $conn;
 

@@ -16,12 +16,18 @@ $registry->set('Connection', $conn);
 $data = json_decode(file_get_contents('php://input'), true);
 
 $userDAO = new UserDAO();
+$json_str = 'Nenhuma informação selecionada';
+
 if ($data["action"] == 'token') {
 	$user = $userDAO->activeUserByToken($data["token"]);
 	
 	$json_str = json_encode($user);
-	echo $json_str;
 } elseif ($data["action"] == 'removeAdmin') {
+    $ok = $userDAO->desactiveUser($data["token"]);
+
+    $json_str = json_encode(['ok' => $ok]);
+} elseif ($data["action"] == 'newCounter') {
 
 }
+echo $json_str;
 ?>
