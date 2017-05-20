@@ -38,14 +38,14 @@ class CounterDAO {
     }
 	
 	public function openNewCounter($token) {
-		$counterRef = getCounterToken($token, 'ASC');
+		$counterRef = $this->getCounterToken($token, 'ASC');
 		
         $this->conn->beginTransaction();
 		
         try {
 			//INSERE UM NOVO CONTADOR
             $stmt = $this->conn->prepare(
-                'INSERT INTO counters (token, date, type) VALUES (:token, now(), :type)'
+                'INSERT INTO counters (token, date, type) VALUES (:token, NOW(), :type)'
             );
 
             $stmt->bindValue(':token', $token);
@@ -74,12 +74,15 @@ class CounterDAO {
 	
 	public function getCounterToken($token, $order = 'ASC') {
 		//BUSCA O CONTADOR REFERENTE AO TOKEN
-		$stmt = $this->conn->prepare(
-			'SELECT * FROM counters WHERE token = :token ORDER BY :order LIMIT 1'
-		);
+		$sql = 'SELECT * FROM counters WHERE token = :token';
+		if ($order == 'ASC') {
+			$sql.= ' ORDER BY id ASC LIMIT 1';
+		} else {
+			$sql.= ' ORDER BY id DESC LIMIT 1';
+		}
+		$stmt = $this->conn->prepare($sql);
 		$stmt->execute(array(
-			':token' => $token,
-			':order' => $order
+			':token' => $token
 		));
 		return $this->processResults($stmt, 0);
 	}
@@ -138,13 +141,13 @@ class CounterDAO {
 			if ($type == 1) {
 				$results = array();
 				while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-					$counter = new Counter($row->id, $row->date_event, $row->token, $row->type, $row->total, $row->total_general);
+					$counter = new Counter($row->id, $row->date, $row->token, $row->type, $row->total, $row->total_general);
 					$results[] = $counter;
 				}
 				return $results;
 			} else {
 				$row = $stmt->fetch(PDO::FETCH_OBJ);
-				$counter = new Counter($row->id, $row->date_event, $row->token, $row->type, $row->total, $row->total_general);
+				$counter = new Counter($row->id, $row->date, $row->token, $row->type, $row->total, $row->total_general);
 				return $counter;
 			}
         }
