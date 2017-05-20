@@ -50,3 +50,9 @@ Stack trace:
 [18-May-2017 19:53:07 UTC] PHP Warning:  Missing argument 2 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
 [18-May-2017 19:53:07 UTC] PHP Warning:  Missing argument 3 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
 [18-May-2017 19:53:07 UTC] PHP Warning:  Missing argument 4 for User::__construct(), called in /home/renanpro/public_html/ws/dao/UserDAO.php on line 56 and defined in /home/renanpro/public_html/ws/model/User.php on line 10
+[19-May-2017 12:36:08 UTC] PHP Fatal error:  Call to a member function insert() on null in /home/renanpro/public_html/ws/admin.php on line 37
+[19-May-2017 13:49:59 UTC] PHP Parse error:  syntax error, unexpected 'function' (T_FUNCTION), expecting ',' or ';' in /home/renanpro/public_html/ws/model/Counter.php on line 11
+[19-May-2017 13:50:00 UTC] PHP Parse error:  syntax error, unexpected 'function' (T_FUNCTION), expecting ',' or ';' in /home/renanpro/public_html/ws/model/Counter.php on line 11
+[19-May-2017 17:22:47 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/renanpro/public_html/ws/dao/CounterDAO.php on line 63
+[19-May-2017 17:22:48 UTC] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/renanpro/public_html/ws/dao/CounterDAO.php on line 63
+[19-May-2017 17:34:59 UTC] PHP Fatal error:  Cannot access empty property in /home/renanpro/public_html/ws/dao/CounterDAO.php on line 86

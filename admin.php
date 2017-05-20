@@ -39,9 +39,16 @@ if ($data["action"] == 'token') {
 	$counter = $counterDAO->insert($counter);
 	
 	$json_str = json_encode($counter);
+} elseif ($data["action"] == 'openCounter') {
+	$counterDAO = new CounterDAO();
+	$counter = new Counter();
+	
+	$counter = $counterDAO->openNewCounter($data["token"]);
+	
+	$json_str = json_encode($counter);
 } elseif ($data["action"] == 'disableCounter') {
 	$counterDAO = new CounterDAO();	
-	$counterDAO->disable($data["id"]);
+	$counterDAO->disable($data["id"], $data["type"]);
 } elseif ($data["action"] == 'syncCounter') {
 	$counterDAO = new CounterDAO();
 	

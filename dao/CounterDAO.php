@@ -34,26 +34,52 @@ class CounterDAO {
             $this->conn->rollback();
         }
         
-        return $this->getCounterToken($token);
+        return $this->getCounterToken($token, 'ASC');
     }
 	
-	public function disable($id) {
+	public function openNewCounter($token) {
+		$counterRef = getCounterToken($token, 'ASC');
+		
+        $this->conn->beginTransaction();
+		
+        try {
+			//INSERE UM NOVO CONTADOR
+            $stmt = $this->conn->prepare(
+                'INSERT INTO counters (token, date, type) VALUES (:token, now(), :type)'
+            );
+
+            $stmt->bindValue(':token', $token);
+            $stmt->bindValue(':type', $counterRef->getType());
+            $stmt->execute();
+
+            $this->conn->commit();
+        }
+        catch(Exception $e) {
+            $this->conn->rollback();
+        }
+        
+        return $this->getCounterToken($token, 'DESC');
+    }
+	
+	public function disable($id, $type) {
 		//DESATIVA UM CONTADOR PELO ID
         $stmt = $this->conn->prepare(
-            'UPDATE counters SET active = 0, date_finish = NOW() WHERE id = :id AND active = 1'
+            'UPDATE counters SET active = :type, date_finish = NOW() WHERE id = :id AND active = 1'
         );
         $stmt->execute(array(
+			':type' => $type,
             ':id' => $id
         ));
     }
 	
-	public function getCounterToken($token) {
+	public function getCounterToken($token, $order = 'ASC') {
 		//BUSCA O CONTADOR REFERENTE AO TOKEN
 		$stmt = $this->conn->prepare(
-			'SELECT * FROM counters WHERE token = :token'
+			'SELECT * FROM counters WHERE token = :token ORDER BY :order LIMIT 1'
 		);
 		$stmt->execute(array(
-			':token' => $token
+			':token' => $token,
+			':order' => $order
 		));
 		return $this->processResults($stmt, 0);
 	}
