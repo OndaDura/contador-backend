@@ -3,15 +3,19 @@ class Counter implements JsonSerializable {
 
     private $id;
     private $dateEvent;
+    private $hour;
     private $token;
+    private $title;
     private $type;
     private $total;
 	private $totalGeneral;
 	
-	function __construct($id = 0, $dateEvent = '', $token = 0, $type = '', $total = 0, $totalGeneral = 0) {
+	function __construct($id = 0, $dateEvent = '', $hour = '', $token = 0, $title = '', $type = '', $total = 0, $totalGeneral = 0) {
 		$this->id = $id;
 		$this->dateEvent = $dateEvent;
+		$this->hour = $hour;
 		$this->token = $token;
+		$this->title = $title;
 		$this->type = $type;
 		$this->total = $total;
 		$this->totalGeneral = $totalGeneral;
@@ -36,6 +40,15 @@ class Counter implements JsonSerializable {
 		} else {
 			$this->dateEvent = $dateEvent;
 		}
+        return $this;
+    }
+    
+    public function getHour() {
+        return $this->hour;
+    }
+
+    public function setHour($hour) {
+        $this->hour = $hour;
         return $this;
     }
 	
@@ -65,6 +78,15 @@ class Counter implements JsonSerializable {
         $this->totalGeneral = $totalGeneral;
         return $this;
     }
+    
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function setTitle($title) {
+        $this->title = $title;
+        return $this;
+    }
 
 	public function getType() {
         return $this->type;
@@ -79,7 +101,9 @@ class Counter implements JsonSerializable {
         return [
             'id' => $this->getId(),
             'dateEvent' => $this->getDateEvent(),
+            'hour' => $this->getHour(),
             'token' => $this->getToken(),
+			'title' => $this->getTitle(),
             'total' => $this->getTotal(),
             'totalGeneral' => $this->getTotalGeneral(),
             'type' => $this->getType()
