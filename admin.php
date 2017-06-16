@@ -31,14 +31,51 @@ if ($data["action"] == 'token') {
     $json_str = json_encode(['ok' => $ok]);
 } elseif ($data["action"] == 'newCounter') {
 	$counterDAO = new CounterDAO();
-	$counter = new Counter();
-	$counter->setId($data["id"]);
-	$counter->setDateEvent($data["date"]);
-	$counter->setType($data["type"]);
+	$counters = [];
+	if ($data["type"] == 'SOMMA') {
+	    
+	    $counter = new Counter();
+	    $counter->setIdAdmin($data["id"]);
+    	$counter->setDateEvent($data["date"]);
+    	$counter->setHour($data["hour"]);
+    	$counter->setTitle($data["title"]);
+    	$counter->setType("Total");
+    	
+    	array_push($counters, $counterDAO->insert($counter));
+    	
+    	$counter->setType("Visitantes");
 	
-	$counter = $counterDAO->insert($counter);
+    	array_push($counters, $counterDAO->insert($counter));
+    	
+    	$counter->setType("Kinder");
 	
-	$json_str = json_encode($counter);
+    	array_push($counters, $counterDAO->insert($counter));
+	} elseif ($data["type"] == 'METANOIA') {
+	    $counter = new Counter();
+	    $counter->setIdAdmin($data["id"]);
+    	$counter->setDateEvent($data["date"]);
+    	$counter->setHour($data["hour"]);
+    	$counter->setTitle($data["title"]);
+    	$counter->setType("Total");
+    	
+    	array_push($counters, $counterDAO->insert($counter));
+    	
+    	$counter->setType("Batismo");
+	
+    	array_push($counters, $counterDAO->insert($counter));
+	} else {
+	    $counter = new Counter();
+	    $counter->setIdAdmin($data["id"]);
+    	$counter->setDateEvent($data["date"]);
+    	$counter->setHour($data["hour"]);
+    	$counter->setType($data["type"]);
+    	$counter->setTitle($data["title"]);
+	
+    	array_push($counters, $counterDAO->insert($counter));
+	}
+    	
+    $json_str = json_encode($counters);   
+	
 } elseif ($data["action"] == 'openCounter') {
 	$counterDAO = new CounterDAO();
 	$counter = new Counter();

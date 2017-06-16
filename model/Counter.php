@@ -2,6 +2,7 @@
 class Counter implements JsonSerializable {
 
     private $id;
+	private $idAdmin;
     private $dateEvent;
     private $hour;
     private $token;
@@ -10,8 +11,9 @@ class Counter implements JsonSerializable {
     private $total;
 	private $totalGeneral;
 	
-	function __construct($id = 0, $dateEvent = '', $hour = '', $token = 0, $title = '', $type = '', $total = 0, $totalGeneral = 0) {
+	function __construct($id = 0, $idAdmin = 0, $dateEvent = '', $hour = '', $token = 0, $title = '', $type = '', $total = 0, $totalGeneral = 0) {
 		$this->id = $id;
+		$this->idAdmin = $idAdmin;
 		$this->dateEvent = $dateEvent;
 		$this->hour = $hour;
 		$this->token = $token;
@@ -30,6 +32,15 @@ class Counter implements JsonSerializable {
         return $this;
     }
 
+	public function getIdAdmin() {
+        return $this->idAdmin;
+    }
+
+    public function setIdAdmin($idAdmin) {
+        $this->idAdmin = $idAdmin;
+        return $this;
+    }
+	
     public function getDateEvent() {
         return $this->dateEvent;
     }
@@ -100,6 +111,7 @@ class Counter implements JsonSerializable {
 	public function jsonSerialize() {
         return [
             'id' => $this->getId(),
+            'idAdmin' => $this->getIdAdmin(),
             'dateEvent' => $this->getDateEvent(),
             'hour' => $this->getHour(),
             'token' => $this->getToken(),

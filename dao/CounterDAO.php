@@ -24,7 +24,7 @@ class CounterDAO {
 
             $stmt->bindValue(':token', $token);
             $stmt->bindValue(':title', $counter->getTitle());
-            $stmt->bindValue(':id_admin', $counter->getId());
+            $stmt->bindValue(':id_admin', $counter->getIdAdmin());
             $stmt->bindValue(':date', $counter->getDateEvent());
             $stmt->bindValue(':hour', $counter->getHour());
             $stmt->bindValue(':type', $counter->getType());
@@ -47,11 +47,12 @@ class CounterDAO {
         try {
 			//INSERE UM NOVO CONTADOR
             $stmt = $this->conn->prepare(
-                'INSERT INTO counters (token, title, date, hour, type) VALUES (:token, :title, :date, :hour, :type)'
+                'INSERT INTO counters (token, title, id_admin, date, hour, type) VALUES (:token, :title, :id_admin, :date, :hour, :type)'
             );
 
             $stmt->bindValue(':token', $token);
             $stmt->bindValue(':title', $counterRef->getTitle());
+			$stmt->bindValue(':id_admin', $counterRef->getIdAdmin());
             $stmt->bindValue(':date', $counterRef->getDateEvent());
             $stmt->bindValue(':hour', $counterRef->getHour());
             $stmt->bindValue(':type', $counterRef->getType());
@@ -146,13 +147,13 @@ class CounterDAO {
 			if ($type == 1) {
 				$results = array();
 				while($row = $stmt->fetch(PDO::FETCH_OBJ)) {
-					$counter = new Counter($row->id, $row->date, $row->hour, $row->token, $row->title, $row->type, $row->total, $row->total_general);
+					$counter = new Counter($row->id, $row->id_admin, $row->date, $row->hour, $row->token, $row->title, $row->type, $row->total, $row->total_general);
 					$results[] = $counter;
 				}
 				return $results;
 			} else {
 				$row = $stmt->fetch(PDO::FETCH_OBJ);
-				$counter = new Counter($row->id, $row->date, $row->hour, $row->token, $row->title, $row->type, $row->total, $row->total_general);
+				$counter = new Counter($row->id, $row->id_admin, $row->date, $row->hour, $row->token, $row->title, $row->type, $row->total, $row->total_general);
 				return $counter;
 			}
         }
