@@ -60,7 +60,7 @@ if ($data["action"] == 'token') {
     	
     	array_push($counters, $counterDAO->insert($counter));
     	
-    	$counter->setType("Batismo");
+    	$counter->setType("Batizados");
 	
     	array_push($counters, $counterDAO->insert($counter));
 	} else {
