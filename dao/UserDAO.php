@@ -39,7 +39,7 @@ class UserDAO {
 	
 	public function activeUserByToken($token) {
 		$stmt = $this->conn->prepare(
-			'UPDATE users SET active = 1, date_register = NOW() WHERE token = :token AND active = 0'
+			'UPDATE users SET active = 1, date_register = NOW() WHERE token = :token'
 		);
 		$stmt->execute(array(
 			':token' => $token

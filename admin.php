@@ -50,6 +50,10 @@ if ($data["action"] == 'token') {
     	$counter->setType("Kinder");
 	
     	array_push($counters, $counterDAO->insert($counter));
+		
+		$counter->setType("Cadeiras");
+	
+    	array_push($counters, $counterDAO->insert($counter));
 	} elseif ($data["type"] == 'METANOIA') {
 	    $counter = new Counter();
 	    $counter->setIdAdmin($data["id"]);
