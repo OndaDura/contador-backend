@@ -96,7 +96,7 @@ class CounterDAO {
 	public function sync($id, $amount) {
 		//INSERE O NOVO TOTAL DO CONTADOR
 		$stmt = $this->conn->prepare(
-            'UPDATE counters SET total = :amount WHERE id = :id AND active = 1'
+            'UPDATE counters SET total = :amount WHERE id = :id
         );
         $stmt->execute(array(
 			':amount' => $amount,
