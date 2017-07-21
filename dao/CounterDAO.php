@@ -96,14 +96,14 @@ class CounterDAO {
 	public function sync($id, $amount) {
 		//INSERE O NOVO TOTAL DO CONTADOR
 		$stmt = $this->conn->prepare(
-            'UPDATE counters SET total = :amount WHERE id = :id
+            'UPDATE counters SET total = :amount WHERE id = :id'
         );
         $stmt->execute(array(
 			':amount' => $amount,
             ':id' => $id
         ));
 		
-		//PEGA O CÓDIGO DO CONTADOR ATUAL
+		/*//PEGA O CÓDIGO DO CONTADOR ATUAL
 		$stmt = $this->conn->prepare(
 			'SELECT token FROM counters WHERE id = :id'
 		);
@@ -130,7 +130,7 @@ class CounterDAO {
             ':id' => $id
         ));
 		
-		return $row->total;
+		return $row->total;*/
 	}
 
     public function getAll() {
