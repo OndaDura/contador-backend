@@ -39,20 +39,23 @@ if ($data["action"] == 'token') {
     	$counter->setDateEvent($data["date"]);
     	$counter->setHour($data["hour"]);
     	$counter->setTitle($data["title"]);
+		
     	$counter->setType("Total");
-    	
     	array_push($counters, $counterDAO->insert($counter));
     	
     	$counter->setType("Visitantes");
-	
     	array_push($counters, $counterDAO->insert($counter));
     	
     	$counter->setType("Kinder");
-	
     	array_push($counters, $counterDAO->insert($counter));
 		
 		$counter->setType("Cadeiras");
-	
+    	array_push($counters, $counterDAO->insert($counter));
+		
+		$counter->setType("Convertidos");
+    	array_push($counters, $counterDAO->insert($counter));
+		
+		$counter->setType("Voluntarios");
     	array_push($counters, $counterDAO->insert($counter));
 	} elseif ($data["type"] == 'METANOIA') {
 	    $counter = new Counter();
